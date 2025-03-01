@@ -69,6 +69,14 @@ disease_info = {
         }
     },
     "Apple___healthy": {
+        "causes": {
+            "en": "All good for you plant",
+            "hi": "आपके पौधे के लिए सब कुछ अच्छा है"
+        },
+        "symptoms": {
+            "en": "No Symptoms",
+            "hi": "कोई लक्षण नहीं"
+        },
         "prevention": {
             "en": ["Maintain proper watering.", "Use organic pesticides.", "Regularly check for early disease signs."],
             "hi": ["सही मात्रा में पानी दें।", "जैविक कीटनाशकों का उपयोग करें।", "रोग के लक्षणों की नियमित जांच करें।"]
@@ -97,6 +105,14 @@ disease_info = {
         }
     },
     "Corn_(maize)___healthy": {
+        "causes": {
+            "en": "All good for you plant",
+            "hi": "आपके पौधे के लिए सब कुछ अच्छा है" 
+        },
+        "symptoms": {
+            "en": "No Symptoms",
+            "hi": "कोई लक्षण नहीं"
+        },
         "prevention": {
             "en": ["Rotate crops to prevent soil depletion.", "Use disease-resistant seeds.", "Avoid overwatering."],
             "hi": ["फसल चक्र अपनाएं।", "रोग प्रतिरोधी बीजों का उपयोग करें।", "अधिक पानी न दें।"]
