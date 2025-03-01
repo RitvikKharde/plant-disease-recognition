@@ -77,7 +77,7 @@ disease_info = {
             "en": ["General NPK Fertilizer (10-10-10)", "Cow Manure"],
             "hi": ["सामान्य एनपीके खाद (10-10-10)", "गाय का गोबर"]
         }
-    }
+    },
     "Corn_(maize)___Northern_Leaf_Blight": {
         "causes": {
             "en": "Caused by the fungus *Exserohilum turcicum*. Spreads in humid, rainy conditions.",
