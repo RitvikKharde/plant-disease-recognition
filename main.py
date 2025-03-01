@@ -7,7 +7,7 @@ import os
 
 # Function to download and load the model
 def download_model():
-    model_path = "trained_modelp.keras"
+    model_path = "trained_model.keras"
     if not os.path.exists(model_path):  # Check if model exists
         url = "https://drive.google.com/file/d/1Z87vAZK_77oHON3Yn1RoP0YS5-zaPoiw/view?usp=drive_link"  # Google Drive Model Link
         gdown.download(url, model_path, quiet=False)
