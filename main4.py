@@ -8,7 +8,7 @@ from googletrans import Translator
 translator = Translator()
 
 # 🏡 Website Title
-st.sidebar.title("🚜 Non-Stop Farmers")
+st.sidebar.title("🚜 Naan-Stop Farmers")
 
 # 🌍 Language Selection
 language = st.sidebar.selectbox("🌐 Select Language", ["English", "Hindi", "Gujarati", "Marathi"])
@@ -16,21 +16,7 @@ language = st.sidebar.selectbox("🌐 Select Language", ["English", "Hindi", "Gu
 # 📌 Sidebar Navigation
 page = st.sidebar.radio(translator.translate("📌 Navigate", dest=language).text, ["🏠 Home", "🔍 Detect Disease", "ℹ️ About Us"])
 
-# 🏠 Home Section
-if page == "🏠 Home":
-    st.title(translator.translate("🚜 Welcome to Non-Stop Farmers!", dest=language).text)
-    st.image("/Users/ritvikkharde/Downloads/Plant_disease.jpg", use_column_width=True)  # Add an image of farmers
-    st.markdown(translator.translate("""
-    🌾 Non-Stop Farmers is dedicated to helping farmers detect crop diseases and find solutions.  
-    🌿 Our AI-driven platform allows you to upload a picture of your crop and get instant disease analysis.  
-    🏡 **Features of Our Platform**:
-    - ✅ AI-Based Crop Disease Detection
-    - ✅ Multiple Language Support (English, Hindi, Gujarati, Marathi)
-    - ✅ Crop Health Reports (Downloadable PDF)
-    - ✅ Farming Tips & Fertilizer Recommendations  
-    """, dest=language).text)
-
-# 🌱 Disease Information for All 8 Conditions (Fixed Dictionary Structure)
+# 🌱 Disease Information Dictionary
 disease_info = {
     "Apple___Apple_scab": {
         "causes": "Caused by the fungus *Venturia inaequalis*. Spreads in cool, wet weather.",
@@ -85,7 +71,12 @@ disease_info = {
 # 🌾 Load ML Model
 @st.cache_resource
 def load_model():
-    return tf.keras.models.load_model('trained_model2.keras')
+    try:
+        model_path = "/Users/ritvikkharde/Downloads/trained_model2.keras"  # Update with correct path
+        return tf.keras.models.load_model(model_path)
+    except Exception as e:
+        st.error(f"❌ Error loading model: {e}")
+        return None
 
 model = load_model()
 
@@ -102,68 +93,74 @@ def generate_report(disease, confidence, translated_data):
 
 # 📸 Image Prediction
 def predict_disease(image):
-    image = tf.keras.preprocessing.image.load_img(image, target_size=(128, 128))
-    input_arr = tf.keras.preprocessing.image.img_to_array(image)
-    input_arr = np.array([input_arr]) / 255.0
-    prediction = model.predict(input_arr)
-    return np.argmax(prediction), max(prediction[0])
+    try:
+        image = tf.keras.preprocessing.image.load_img(image, target_size=(128, 128))
+        input_arr = tf.keras.preprocessing.image.img_to_array(image)
+        input_arr = np.array([input_arr]) / 255.0  # Normalize image
+
+        model = load_model()  # Ensure model is loaded inside function
+        if model is None:
+            return None, None
+
+        prediction = model.predict(input_arr)
+        return np.argmax(prediction), max(prediction[0])
+    except Exception as e:
+        st.error(f"❌ Error during prediction: {e}")
+        return None, None
 
 # 📌 Detect Disease Section
 if page == "🔍 Detect Disease":
     st.title(translator.translate("🔍 Detect Crop Disease", dest=language).text)
     st.header(translator.translate("Upload Crop Image for Disease Detection", dest=language).text)
-    
+
     test_image = st.file_uploader(translator.translate("Upload an image:", dest=language).text)
 
     if st.button(translator.translate("Predict Disease", dest=language).text):
         if test_image:
             with st.spinner(translator.translate("⏳ Processing...", dest=language).text):
                 result_index, confidence = predict_disease(test_image)
-                class_names = list(disease_info.keys())
-                predicted_disease = class_names[result_index]
+                
+                if result_index is not None:
+                    class_names = list(disease_info.keys())
+                    predicted_disease = class_names[result_index]
 
-                # 🌍 Translate Disease Information
-                translated_data = {
-                    "Disease": translator.translate(predicted_disease, dest=language).text,
-                    "Causes": translator.translate(disease_info[predicted_disease]["causes"], dest=language).text,
-                    "Symptoms": translator.translate(disease_info[predicted_disease]["symptoms"], dest=language).text,
-                    "Prevention": [translator.translate(prevention, dest=language).text for prevention in disease_info[predicted_disease]["prevention"]],
-                    "Fertilizer": [translator.translate(fertilizer, dest=language).text for fertilizer in disease_info[predicted_disease]["fertilizer"]]
-                }
+                    # 🌍 Translate Disease Information
+                    translated_data = {
+                        "Disease": translator.translate(predicted_disease, dest=language).text,
+                        "Causes": translator.translate(disease_info[predicted_disease]["causes"], dest=language).text,
+                        "Symptoms": translator.translate(disease_info[predicted_disease]["symptoms"], dest=language).text,
+                        "Prevention": [translator.translate(prevention, dest=language).text for prevention in disease_info[predicted_disease]["prevention"]],
+                        "Fertilizer": [translator.translate(fertilizer, dest=language).text for fertilizer in disease_info[predicted_disease]["fertilizer"]]
+                    }
 
-                # 🛡️ Display Results
-                st.success(f"🌾 {translated_data['Disease']} detected!")
-                st.subheader(translator.translate("🦠 Causes:", dest=language).text)
-                st.write(f"👉 {translated_data['Causes']}")
-                st.subheader(translator.translate("🛑 Symptoms:", dest=language).text)
-                st.write(f"🔹 {translated_data['Symptoms']}")
+                    # 🛡️ Display Results
+                    st.success(f"🌾 {translated_data['Disease']} detected!")
+                    st.subheader(translator.translate("🦠 Causes:", dest=language).text)
+                    st.write(f"👉 {translated_data['Causes']}")
+                    st.subheader(translator.translate("🛑 Symptoms:", dest=language).text)
+                    st.write(f"🔹 {translated_data['Symptoms']}")
 
-                st.subheader(translator.translate("🛡️ Prevention Methods:", dest=language).text)
-                for prevention in translated_data["Prevention"]:
-                    st.write(f"✔ {prevention}")
+                    st.subheader(translator.translate("🛡️ Prevention Methods:", dest=language).text)
+                    for prevention in translated_data["Prevention"]:
+                        st.write(f"✔ {prevention}")
 
-                st.subheader(translator.translate("🌱 Recommended Fertilizers:", dest=language).text)
-                for fertilizer in translated_data["Fertilizer"]:
-                    st.write(f"✅ {fertilizer}")
+                    st.subheader(translator.translate("🌱 Recommended Fertilizers:", dest=language).text)
+                    for fertilizer in translated_data["Fertilizer"]:
+                        st.write(f"✅ {fertilizer}")
 
-                # 📜 Generate & Download Report
-                report_file = generate_report(predicted_disease, confidence, translated_data)
-                with open(report_file, "rb") as file:
-                    st.download_button(label=translator.translate("📄 Download Report", dest=language).text, data=file, file_name="Crop_Report.pdf")
+                    # 📜 Generate & Download Report
+                    report_file = generate_report(predicted_disease, confidence, translated_data)
+                    with open(report_file, "rb") as file:
+                        st.download_button(label=translator.translate("📄 Download Report", dest=language).text, data=file, file_name="Crop_Report.pdf")
 
 # ℹ️ About Us Section
 if page == "ℹ️ About Us":
     st.title(translator.translate("ℹ️ About Non-Stop Farmers", dest=language).text)
-    st.image("/Users/ritvikkharde/Downloads/Plant_disease.jpg", use_column_width=True)  # Add an image for branding
+    st.image("/Users/ritvikkharde/Downloads/Plant_disease.jpg", use_column_width=True)
     st.markdown(translator.translate("""
     Non-Stop Farmers is an **AI-powered farming assistant** designed to help farmers detect diseases and manage their crops efficiently.  
     🏆 **Our Vision:**  
     - Empower farmers with **accurate disease detection**.  
     - Provide **instant AI-driven solutions**.  
     - Improve **crop health and yield** with data-driven insights.  
-      
-    🤝 **Meet Our Team:**  
-    - 👨‍💻 AI Experts  
-    - 👩‍🌾 Agricultural Scientists  
-    - 📢 Farming Community Leaders  
     """, dest=language).text)
