@@ -72,7 +72,7 @@ disease_info = {
 @st.cache_resource
 def load_model():
     try:
-        model_path = "/Users/ritvikkharde/Downloads/trained_model2.keras"  # Update with correct path
+        model_path = "/Users/ritvikkharde/Downloads/Plant_Disease_Dataset/trained_model2.keras"  # Update with correct path
         return tf.keras.models.load_model(model_path)
     except Exception as e:
         st.error(f"❌ Error loading model: {e}")
