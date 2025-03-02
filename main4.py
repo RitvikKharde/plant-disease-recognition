@@ -129,7 +129,7 @@ if app_mode == "🏡 Home":
 elif app_mode == "📖 Info":
     st.header(translator.translate("📚 Learn About Crop Diseases", dest=language).text)
     st.markdown(translator.translate("""
-    🌾 This system is trained on **87,000+ crop images** using **AI-powered deep learning**.  
+    🌾 This system is trained on **15,000+ crop images** using **AI-powered deep learning**.  
     📊 It can detect **multiple crop diseases accurately**.  
 
     ✅ **Simple, Fast, and Accurate!**  
