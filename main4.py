@@ -76,12 +76,11 @@ def load_model():
 model = load_model()
 
 # 📜 Generate PDF Report
-def generate_report(disease, confidence, translated_data):
+def generate_report(disease, translated_data):
     filename = "Crop_Report.pdf"
     c = canvas.Canvas(filename)
     c.drawString(100, 800, "Crop Disease Report")
     c.drawString(100, 780, f"Disease: {disease}")
-    c.drawString(100, 760, f"Confidence: {confidence*100:.2f}%")
     c.drawString(100, 740, "Details:")
     
     y_position = 720
@@ -187,6 +186,6 @@ elif app_mode == "🌿 Detect Disease":
                     st.write(f"✅ {fertilizer}")
 
                 # 📜 Generate & Download Report
-                report_file = generate_report(predicted_disease, confidence, translated_data)
+                report_file = generate_report(predicted_disease,  translated_data)
                 with open(report_file, "rb") as file:
                     st.download_button(label=translator.translate("📄 Download Report", dest=language).text, data=file, file_name="Crop_Report.pdf")
