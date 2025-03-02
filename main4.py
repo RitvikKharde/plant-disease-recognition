@@ -164,26 +164,26 @@ elif app_mode == "🌿 Detect Disease":
             if predicted_disease in disease_info:
                 # 🌍 Translate Disease Information
                 translated_data = {
-                    "Disease": translator.translate(predicted_disease, dest=language).text,
-                    "Causes": translator.translate(disease_info[predicted_disease]["causes"], dest=language).text,
-                    "Symptoms": translator.translate(disease_info[predicted_disease]["symptoms"], dest=language).text,
-                    "How to Save Your Crops": [translator.translate(step, dest=language).text for step in disease_info[predicted_disease]["How to Save Your Crops"]],
-                    "Best Fertilizers": [translator.translate(fertilizer, dest=language).text for fertilizer in disease_info[predicted_disease]["Best Fertilizers"]]
-                }
+                "Disease": translator.translate(predicted_disease, dest=language).text,
+                "Causes": translator.translate(disease_info[predicted_disease]["causes"], dest=language).text,
+                "Symptoms": translator.translate(disease_info[predicted_disease]["symptoms"], dest=language).text,
+                "Prevention": [translator.translate(prevention, dest=language).text for prevention in disease_info[predicted_disease]["prevention"]],
+                "Fertilizer": [translator.translate(fertilizer, dest=language).text for fertilizer in disease_info[predicted_disease]["fertilizer"]]
+            }
 
                 # 🛡️ Display Results
-                st.subheader(translator.translate("🦠 What is causing this?", dest=language).text)
-                st.write(f"👉 {translated_data['causes']}")
-                
+                st.success(f"🌾 {translated_data['Disease']} detected!")
+                st.subheader(translator.translate("🦠 Causes:", dest=language).text)
+                st.write(f"👉 {translated_data['Causes']}")
                 st.subheader(translator.translate("🛑 Symptoms:", dest=language).text)
-                st.write(f"🔹 {translated_data['symptoms']}")
+                st.write(f"🔹 {translated_data['Symptoms']}")
 
-                st.subheader(translator.translate("🛡️ How to Protect Your Crop?", dest=language).text)
-                for prevention in translated_data["How to Save Your Crops"]:
+                st.subheader(translator.translate("🛡️ Prevention Methods:", dest=language).text)
+                for prevention in translated_data["Prevention"]:
                     st.write(f"✔ {prevention}")
 
-                st.subheader(translator.translate("🌱 Best Fertilizers to Use", dest=language).text)
-                for fertilizer in translated_data["Best Fertilizers"]:
+                st.subheader(translator.translate("🌱 Recommended Fertilizers:", dest=language).text)
+                for fertilizer in translated_data["Fertilizer"]:
                     st.write(f"✅ {fertilizer}")
 
                 # 📜 Generate & Download Report
