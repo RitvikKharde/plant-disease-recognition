@@ -19,7 +19,7 @@ page = st.sidebar.radio(translator.translate("📌 Navigate", dest=language).tex
 # 🏠 Home Section
 if page == "🏠 Home":
     st.title(translator.translate("🚜 Welcome to Non-Stop Farmers!", dest=language).text)
-    st.image("farmers_image.jpg", use_column_width=True)  # Add an image of farmers
+    st.image("/Users/ritvikkharde/Downloads/Plant_disease.jpg", use_column_width=True)  # Add an image of farmers
     st.markdown(translator.translate("""
     🌾 Non-Stop Farmers is dedicated to helping farmers detect crop diseases and find solutions.  
     🌿 Our AI-driven platform allows you to upload a picture of your crop and get instant disease analysis.  
@@ -154,7 +154,7 @@ if page == "🔍 Detect Disease":
 # ℹ️ About Us Section
 if page == "ℹ️ About Us":
     st.title(translator.translate("ℹ️ About Non-Stop Farmers", dest=language).text)
-    st.image("about_us.jpg", use_column_width=True)  # Add an image for branding
+    st.image("/Users/ritvikkharde/Downloads/Plant_disease.jpg", use_column_width=True)  # Add an image for branding
     st.markdown(translator.translate("""
     Non-Stop Farmers is an **AI-powered farming assistant** designed to help farmers detect diseases and manage their crops efficiently.  
     🏆 **Our Vision:**  
