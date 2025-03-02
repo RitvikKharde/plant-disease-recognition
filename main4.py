@@ -4,19 +4,19 @@ import numpy as np
 from reportlab.pdfgen import canvas
 from googletrans import Translator
 
-# 🌍 Initialize Translator for Multiple Languages
+# Initialize Translator for Multiple Languages
 translator = Translator()
 
-# 🏡 Website Title
+# Website Title
 st.sidebar.title("🚜 Non-Stop Farmers")
 
-# 🌍 Language Selection
+# Language Selection
 language = st.sidebar.selectbox("🌐 Select Language", ["English", "Hindi", "Gujarati", "Marathi"])
 
-# 📌 Sidebar Navigation
+# Sidebar Navigation
 app_mode = st.sidebar.radio(translator.translate("📌 Choose Option", dest=language).text, ["🏡 Home", "📖 Info", "🌿 Detect Disease"])
 
-# 🌿 Disease Information (Multilingual Support)
+# Disease Information (Multilingual Support)
 disease_info = {
     "Apple___Apple_scab": {
         "causes": "Caused by the fungus *Venturia inaequalis*. Spreads in cool, wet weather.",
@@ -68,14 +68,14 @@ disease_info = {
     }
 }
 
-# 🌾 Load ML Model
+# Load ML Model
 @st.cache_resource
 def load_model():
     return tf.keras.models.load_model("trained_model2.keras")
 
 model = load_model()
 
-# 📜 Generate PDF Report
+# Generate PDF Report
 def generate_report(disease, translated_data):
     filename = "Crop_Report.pdf"
     c = canvas.Canvas(filename)
@@ -95,12 +95,12 @@ def model_prediction(test_image):
     model  = tf.keras.models.load_model('trained_model2.keras')
     image = tf.keras.preprocessing.image.load_img(test_image,target_size=(128, 128))
     input_arr = tf.keras.preprocessing.image.img_to_array(image)
-    input_arr = np.array([input_arr]) #Convert single image to a batch
+    input_arr = np.array([input_arr]) 
     prediction = model.predict(input_arr)
     result_index = np.argmax(prediction)
     return result_index
 
-# 📸 Image Prediction
+# Image Prediction
 def predict_disease(image):
     image = tf.keras.preprocessing.image.load_img(image, target_size=(128, 128))
     input_arr = tf.keras.preprocessing.image.img_to_array(image)
@@ -109,7 +109,7 @@ def predict_disease(image):
     prediction = model.predict(input_arr)
     return np.argmax(prediction), max(prediction[0])
 
-# 🏡 Home Page
+# Home Page
 if app_mode == "🏡 Home":
     st.header(translator.translate("🌾 Crop Disease Detection System", dest=language).text)
     st.image("/Users/ritvikkharde/Downloads/Plant_disease.jpg", use_column_width=True)
@@ -125,17 +125,17 @@ if app_mode == "🏡 Home":
     ✅ **Start by clicking "🌿 Detect Disease" now!**  
     """, dest=language).text)
 
-# 📖 Info Page
+# Info Page
 elif app_mode == "📖 Info":
     st.header(translator.translate("📚 Learn About Crop Diseases", dest=language).text)
     st.markdown(translator.translate("""
-    🌾 This system is trained on **15,000+ crop images** using **AI-powered deep learning**.  
+    🌾 This system is trained on **87,000+ crop images** using **AI-powered deep learning**.  
     📊 It can detect **multiple crop diseases accurately**.  
 
     ✅ **Simple, Fast, and Accurate!**  
     """, dest=language).text)
 
-# 🌿 Disease Detection Page
+# Disease Detection Page
 elif app_mode == "🌿 Detect Disease":
     st.header(translator.translate("🌱 Upload Crop Image for Disease Detection", dest=language).text)
     test_image = st.file_uploader(translator.translate("📸 Upload an image:", dest=language).text)
@@ -143,7 +143,7 @@ elif app_mode == "🌿 Detect Disease":
     if st.button(translator.translate("🖼️ Show Image", dest=language).text):
         st.image(test_image, use_column_width=True)
 
-    # 🔍 Predict Disease
+    # Predict Disease
     if st.button(translator.translate("🔍 Detect Disease", dest=language).text):
         with st.spinner(translator.translate("⏳ Please wait...", dest=language).text):
             result_index = model_prediction(test_image)
@@ -161,7 +161,7 @@ elif app_mode == "🌿 Detect Disease":
             st.success(f"🌾 {translator.translate('Your crop has:', dest=language).text} `{predicted_disease}`")
 
             if predicted_disease in disease_info:
-                # 🌍 Translate Disease Information
+                # Translate Disease Information
                 translated_data = {
                 "Disease": translator.translate(predicted_disease, dest=language).text,
                 "Causes": translator.translate(disease_info[predicted_disease]["causes"], dest=language).text,
@@ -170,7 +170,7 @@ elif app_mode == "🌿 Detect Disease":
                 "Fertilizer": [translator.translate(fertilizer, dest=language).text for fertilizer in disease_info[predicted_disease]["fertilizer"]]
             }
 
-                # 🛡️ Display Results
+                # Display Results
                 st.success(f"🌾 {translated_data['Disease']} detected!")
                 st.subheader(translator.translate("🦠 Causes:", dest=language).text)
                 st.write(f"👉 {translated_data['Causes']}")
@@ -185,7 +185,7 @@ elif app_mode == "🌿 Detect Disease":
                 for fertilizer in translated_data["Fertilizer"]:
                     st.write(f"✅ {fertilizer}")
 
-                # 📜 Generate & Download Report
+                # Generate & Download Report
                 report_file = generate_report(predicted_disease,  translated_data)
                 with open(report_file, "rb") as file:
                     st.download_button(label=translator.translate("📄 Download Report", dest=language).text, data=file, file_name="Crop_Report.pdf")
