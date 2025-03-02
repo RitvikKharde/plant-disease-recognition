@@ -180,10 +180,10 @@ if st.button(translator.translate("Predict Disease", dest=language).text):
             # 🌍 Translate Disease Information
             translated_data = {
                 "Disease": translator.translate(predicted_disease, dest=language).text,
-                "Causes": translator.translate(disease_info[predicted_disease]["Causes"], dest=language).text,
-                "Symptoms": translator.translate(disease_info[predicted_disease]["Symptoms"], dest=language).text,
-                "Prevention": [translator.translate(prevention, dest=language).text for prevention in disease_info[predicted_disease]["Prevention"]],
-                "Fertilizer": [translator.translate(fertilizer, dest=language).text for fertilizer in disease_info[predicted_disease]["Fertilizer"]]
+                "Causes": translator.translate(disease_info[predicted_disease]["causes"], dest=language).text,
+                "Symptoms": translator.translate(disease_info[predicted_disease]["symptoms"], dest=language).text,
+                "Prevention": [translator.translate(prevention, dest=language).text for prevention in disease_info[predicted_disease]["prevention"]],
+                "Fertilizer": [translator.translate(fertilizer, dest=language).text for fertilizer in disease_info[predicted_disease]["fertilizer"]]
             }
 
             # 🛡️ Display Results
