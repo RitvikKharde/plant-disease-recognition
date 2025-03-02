@@ -8,122 +8,58 @@ from googletrans import Translator
 # 🌍 Initialize Translator for Multiple Languages
 translator = Translator()
 
-# 🌱 Disease Information for All 8 Conditions
+# 🌱 Disease Information for All 8 Conditions (Fixed Dictionary Structure)
 disease_info = {
     "Apple___Apple_scab": {
-        "causes": {
-            "Caused by the fungus *Venturia inaequalis*. Spreads in cool, wet weather."
-        },
-        "symptoms": {
-            "Dark spots on leaves and fruit, reducing yield."
-        },
-        "prevention": {
-            "Remove infected leaves.", "Apply fungicide (Mancozeb, Captan).", "Use resistant varieties."
-        },
-        "fertilizer": {
-            "Potassium-rich fertilizer", "Organic compost"
-        }
+        "causes": "Caused by the fungus *Venturia inaequalis*. Spreads in cool, wet weather.",
+        "symptoms": "Dark spots on leaves and fruit, reducing yield.",
+        "prevention": ["Remove infected leaves.", "Apply fungicide (Mancozeb, Captan).", "Use resistant varieties."],
+        "fertilizer": ["Potassium-rich fertilizer", "Organic compost"]
     },
     "Apple___Cedar_apple_rust": {
-        "causes": {
-            "Caused by *Gymnosporangium juniperi-virginianae*, requires both cedar and apple trees."
-        },
-        "symptoms": {
-            "Orange rust spots on leaves, reducing fruit quality."
-        },
-        "prevention": {
-            "Remove nearby cedar trees.", "Apply fungicide before bud break.", "Use resistant varieties."
-        },
-        "fertilizer": {
-            "Balanced NPK (10-10-10)", "Calcium Nitrate"
-        }
+        "causes": "Caused by *Gymnosporangium juniperi-virginianae*, requires both cedar and apple trees.",
+        "symptoms": "Orange rust spots on leaves, reducing fruit quality.",
+        "prevention": ["Remove nearby cedar trees.", "Apply fungicide before bud break.", "Use resistant varieties."],
+        "fertilizer": ["Balanced NPK (10-10-10)", "Calcium Nitrate"]
     },
     "Apple___healthy": {
-        "causes": {
-            "All good for you plant"
-        },
-        "symptoms": {
-            "No Symptoms"
-        },
-        "prevention": {
-            "Maintain proper watering.", "Use organic pesticides.", "Regularly check for early disease signs."
-        },
-        "fertilizer": {
-            "General NPK Fertilizer (10-10-10)", "Cow Manure"
-        }
+        "causes": "All good for your plant.",
+        "symptoms": "No symptoms.",
+        "prevention": ["Maintain proper watering.", "Use organic pesticides.", "Regularly check for early disease signs."],
+        "fertilizer": ["General NPK Fertilizer (10-10-10)", "Cow Manure"]
     },
     "Corn_(maize)___Northern_Leaf_Blight": {
-        "causes": {
-            "Caused by the fungus *Exserohilum turcicum*. Spreads in humid, rainy conditions."
-        },
-        "symptoms": {
-            "Long gray-green lesions on corn leaves, causing reduced photosynthesis."
-        },
-        "prevention": {
-            "Use resistant corn hybrids.", "Apply fungicides (Propiconazole, Azoxystrobin).", "Rotate crops every 2-3 years."
-        },
-        "fertilizer": {
-            "Nitrogen-based fertilizer", "Phosphorus-rich fertilizer"
-        }
+        "causes": "Caused by the fungus *Exserohilum turcicum*. Spreads in humid, rainy conditions.",
+        "symptoms": "Long gray-green lesions on corn leaves, causing reduced photosynthesis.",
+        "prevention": ["Use resistant corn hybrids.", "Apply fungicides (Propiconazole, Azoxystrobin).", "Rotate crops every 2-3 years."],
+        "fertilizer": ["Nitrogen-based fertilizer", "Phosphorus-rich fertilizer"]
     },
     "Corn_(maize)___healthy": {
-        "causes": {
-            "All good for you plant"
-        },
-        "symptoms": {
-            "No Symptoms"
-        },
-        "prevention": {
-            "Rotate crops to prevent soil depletion.", "Use disease-resistant seeds.", "Avoid overwatering."
-        },
-        "fertilizer": {
-            "Balanced NPK Fertilizer (10-10-10)", "Organic compost"
-        }
+        "causes": "All good for your plant.",
+        "symptoms": "No symptoms.",
+        "prevention": ["Rotate crops to prevent soil depletion.", "Use disease-resistant seeds.", "Avoid overwatering."],
+        "fertilizer": ["Balanced NPK Fertilizer (10-10-10)", "Organic compost"]
     },
     "Grape___Esca_(Black_Measles)": {
-        "causes": {
-            "Caused by fungi *Phaeomoniella chlamydospora* and *Phaeoacremonium aleophilum*. Spreads through pruning wounds."
-        },
-        "symptoms": {
-            "Brown streaking inside wood, vine collapse."
-        },
-        "prevention": {
-            "Avoid pruning in wet weather.", "Seal pruning cuts with fungicidal paste.", "Remove and destroy infected vines."
-        },
-        "fertilizer": {
-            "Organic compost", "Balanced NPK fertilizer"
-        }
+        "causes": "Caused by fungi *Phaeomoniella chlamydospora* and *Phaeoacremonium aleophilum*. Spreads through pruning wounds.",
+        "symptoms": "Brown streaking inside wood, vine collapse.",
+        "prevention": ["Avoid pruning in wet weather.", "Seal pruning cuts with fungicidal paste.", "Remove and destroy infected vines."],
+        "fertilizer": ["Organic compost", "Balanced NPK fertilizer"]
     },
     "Strawberry___Leaf_scorch": {
-        "causes": {
-            "Caused by the fungus *Diplocarpon earlianum*. Thrives in warm, humid conditions."
-        },
-        "symptoms": {
-            "Brown spots with purple edges on strawberry leaves."
-        },
-        "prevention": {
-            "Remove infected leaves before winter.", "Apply fungicide (Captan, Chlorothalonil).", "Ensure good air circulation around plants."
-        },
-        "fertilizer": {
-            "High phosphorus fertilizer", "Organic manure"
-        }
+        "causes": "Caused by the fungus *Diplocarpon earlianum*. Thrives in warm, humid conditions.",
+        "symptoms": "Brown spots with purple edges on strawberry leaves.",
+        "prevention": ["Remove infected leaves before winter.", "Apply fungicide (Captan, Chlorothalonil).", "Ensure good air circulation around plants."],
+        "fertilizer": ["High phosphorus fertilizer", "Organic manure"]
     },
     "Tomato___Early_blight": {
-        "causes": {
-            "Caused by the fungus *Alternaria solani*. Spreads through infected seeds, soil, and splashing water."
-        },
-        "symptoms": {
-             "Brown concentric rings on tomato leaves."
-        },
-        "prevention": {
-            "Rotate crops to prevent soil contamination.", "Use resistant tomato varieties.", "Apply fungicides (Copper Fungicide, Mancozeb)."
-            
-        },
-        "fertilizer": {
-             "Potassium-based fertilizers", "Calcium-rich fertilizers"
-        }
+        "causes": "Caused by the fungus *Alternaria solani*. Spreads through infected seeds, soil, and splashing water.",
+        "symptoms": "Brown concentric rings on tomato leaves.",
+        "prevention": ["Rotate crops to prevent soil contamination.", "Use resistant tomato varieties.", "Apply fungicides (Copper Fungicide, Mancozeb)."],
+        "fertilizer": ["Potassium-based fertilizers", "Calcium-rich fertilizers"]
     }
 }
+
 # 🌾 Load ML Model
 @st.cache_resource
 def load_model():
@@ -138,8 +74,7 @@ def recognize_speech():
         st.info("🎤 Speak now...")
         audio = recognizer.listen(source)
     try:
-        text = recognizer.recognize_google(audio)
-        return text
+        return recognizer.recognize_google(audio)
     except:
         return "Speech not recognized"
 
@@ -150,11 +85,11 @@ def generate_report(disease, confidence, translated_data):
     c.drawString(100, 800, f"Crop Disease Report")
     c.drawString(100, 780, f"Disease: {disease}")
     c.drawString(100, 760, f"Confidence: {confidence*100}%")
-    c.drawString(100, 740, f"Translated Details: {translated_data}")
+    c.drawString(100, 740, f"Details: {translated_data}")
     c.save()
     return filename
 
-# 📸 Image Preprocessing & Prediction
+# 📸 Image Prediction
 def predict_disease(image):
     image = tf.keras.preprocessing.image.load_img(image, target_size=(128, 128))
     input_arr = tf.keras.preprocessing.image.img_to_array(image)
@@ -190,7 +125,6 @@ if st.button(translator.translate("Predict Disease", dest=language).text):
             st.success(f"🌾 {translated_data['Disease']} detected!")
             st.subheader(translator.translate("🦠 Causes:", dest=language).text)
             st.write(f"👉 {translated_data['Causes']}")
-
             st.subheader(translator.translate("🛑 Symptoms:", dest=language).text)
             st.write(f"🔹 {translated_data['Symptoms']}")
 
@@ -206,17 +140,3 @@ if st.button(translator.translate("Predict Disease", dest=language).text):
             report_file = generate_report(predicted_disease, confidence, translated_data)
             with open(report_file, "rb") as file:
                 st.download_button(label=translator.translate("📄 Download Report", dest=language).text, data=file, file_name="Crop_Report.pdf")
-
-# 🎙️ Voice Input for Crop Names
-st.header(translator.translate("🎙️ Speak Crop Name for Advice", dest=language).text)
-if st.button(translator.translate("🎤 Start Voice Input", dest=language).text):
-    crop_name = recognize_speech()
-    if crop_name in disease_info:
-        translated_crop = translator.translate(crop_name, dest=language).text
-        st.write(f"🌱 {translated_crop} detected! Here are the details:")
-        st.write(f"🦠 Causes: {translator.translate(disease_info[crop_name]['Causes'], dest=language).text}")
-        st.write(f"🛑 Symptoms: {translator.translate(disease_info[crop_name]['Symptoms'], dest=language).text}")
-        st.write(f"🛡️ Prevention: {[translator.translate(prevention, dest=language).text for prevention in disease_info[crop_name]['Prevention']]}")
-        st.write(f"🌱 Fertilizer: {[translator.translate(fertilizer, dest=language).text for fertilizer in disease_info[crop_name]['Fertilizer']]}")
-    else:
-        st.warning(translator.translate("❌ Disease not found. Try again!", dest=language).text)
